@@ -13,6 +13,7 @@ namespace TicTacToe
             Console.WriteLine("Welcome to TicTacToe Game.");
             char[] board = CreateBoard();
             char userLetter = ChooseLetter();
+            DisplayBoard(board);
         }
         /// <summary>
         /// UC1-Creates the board.
@@ -34,6 +35,18 @@ namespace TicTacToe
             Console.WriteLine("Choose your letter.");
             string userLetter = Console.ReadLine();
             return char.ToUpper(userLetter[0]);
+        }
+        /// <summary>
+        /// Display the board.
+        /// </summary>
+        /// <param name="board">The board.</param>
+        private static void DisplayBoard(char[] board)
+        {
+            Console.WriteLine("\n " + board[1] + " | " + board[2] + " | " + board[3]);
+            Console.WriteLine("-----------");
+            Console.WriteLine(" " + board[4] + " | " + board[5] + " | " + board[6]);
+            Console.WriteLine("-----------");
+            Console.WriteLine(" " + board[7] + " | " + board[8] + " | " + board[9]);
         }
     }
 }
