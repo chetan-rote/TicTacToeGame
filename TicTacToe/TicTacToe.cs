@@ -11,9 +11,9 @@ namespace TicTacToe
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to TicTacToe Game.");
-            char[] board = CreateBoard();
-            char userLetter = ChooseLetter();
+            char[] board = CreateBoard();            
             DisplayBoard(board);
+            int userMove = GetUserMove(board);
         }
         /// <summary>
         /// UC1-Creates the board.
@@ -47,6 +47,34 @@ namespace TicTacToe
             Console.WriteLine(" " + board[4] + " | " + board[5] + " | " + board[6]);
             Console.WriteLine("-----------");
             Console.WriteLine(" " + board[7] + " | " + board[8] + " | " + board[9]);
+        }
+        /// <summary>
+        /// Gets the user move.
+        /// </summary>
+        /// <param name="board">The board.</param>
+        /// <returns></returns>
+        private static int GetUserMove(char[] board)
+        {
+            int[] validCells = { 1, 2, 3, 4, 5, 6, 7, 8, 9};
+            while (true)
+            {
+                Console.WriteLine("What is your move between 1-9: ");
+                int index = Convert.ToInt32(Console.ReadLine());
+                if (Array.Find<int>(validCells, element => element == index) != 0 && IsSpaceFree(board, index));
+                return index;
+            }
+        }
+        /// <summary>
+        /// Determines whether space is free.
+        /// </summary>
+        /// <param name="board">The board.</param>
+        /// <param name="index">The index.</param>
+        /// <returns>
+        ///   <c>true</c> if [is space free] [the specified board]; otherwise, <c>false</c>.
+        /// </returns>
+        private static bool IsSpaceFree(char[] board, int index)
+        {
+            return board[index] == ' ';
         }
     }
 }
