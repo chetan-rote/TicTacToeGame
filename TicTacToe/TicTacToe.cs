@@ -11,9 +11,11 @@ namespace TicTacToe
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to TicTacToe Game.");
-            char[] board = CreateBoard();            
+            char[] board = CreateBoard();
+            char userLetter = ChooseLetter();
             DisplayBoard(board);
             int userMove = GetUserMove(board);
+            MakeMove(board, userMove, userLetter);
         }
         /// <summary>
         /// UC1-Creates the board.
@@ -37,7 +39,7 @@ namespace TicTacToe
             return char.ToUpper(userLetter[0]);
         }
         /// <summary>
-        /// Display the board.
+        /// UC3-Display the board.
         /// </summary>
         /// <param name="board">The board.</param>
         private static void DisplayBoard(char[] board)
@@ -49,7 +51,7 @@ namespace TicTacToe
             Console.WriteLine(" " + board[7] + " | " + board[8] + " | " + board[9]);
         }
         /// <summary>
-        /// Gets the user move.
+        /// UC4-Gets the user move.
         /// </summary>
         /// <param name="board">The board.</param>
         /// <returns></returns>
@@ -75,6 +77,17 @@ namespace TicTacToe
         private static bool IsSpaceFree(char[] board, int index)
         {
             return board[index] == ' ';
+        }
+        /// <summary>
+        /// UC5-Makes the move.
+        /// </summary>
+        /// <param name="board">The board.</param>
+        /// <param name="index">The index.</param>
+        /// <param name="letter">The letter.</param>
+        private static void MakeMove(char[] board, int index, char letter)
+        {
+            bool spaceFree = IsSpaceFree(board, index);
+            if (spaceFree) board[index] = letter;
         }
     }
 }
