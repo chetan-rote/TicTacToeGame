@@ -4,6 +4,9 @@ namespace TicTacToe
 {
     class TicTacToe
     {
+        public const int HEAD = 0;
+        public const int TAILS = 1;
+        public enum Player { USER, COMPUTER };
         /// <summary>
         /// Defines the entry point of the application.
         /// </summary>
@@ -11,11 +14,9 @@ namespace TicTacToe
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to TicTacToe Game.");
-            char[] board = CreateBoard();
-            char userLetter = ChooseLetter();
-            DisplayBoard(board);
+            char[] board = CreateBoard();            
             int userMove = GetUserMove(board);
-            MakeMove(board, userMove, userLetter);
+            Player player = GetWhoStartFirst();
         }
         /// <summary>
         /// UC1-Creates the board.
@@ -57,12 +58,12 @@ namespace TicTacToe
         /// <returns></returns>
         private static int GetUserMove(char[] board)
         {
-            int[] validCells = { 1, 2, 3, 4, 5, 6, 7, 8, 9};
+            int[] validCells = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
             while (true)
             {
                 Console.WriteLine("What is your move between 1-9: ");
                 int index = Convert.ToInt32(Console.ReadLine());
-                if (Array.Find<int>(validCells, element => element == index) != 0 && IsSpaceFree(board, index));
+                if (Array.Find<int>(validCells, element => element == index) != 0 && IsSpaceFree(board, index)) ;
                 return index;
             }
         }
@@ -89,5 +90,25 @@ namespace TicTacToe
             bool spaceFree = IsSpaceFree(board, index);
             if (spaceFree) board[index] = letter;
         }
+        /// <summary>
+        /// Gets the who start first.
+        /// </summary>
+        /// <returns></returns>
+        private static Player GetWhoStartFirst()
+        {
+            int toss = GetOneFromRandomChoices(2);
+            return (toss == HEAD) ? Player.USER : Player.COMPUTER;
+        }
+        /// <summary>
+        /// Gets the one from random choices.
+        /// </summary>
+        /// <param name="choices">The choices.</param>
+        /// <returns></returns>
+        private static int GetOneFromRandomChoices(int choices)
+        {
+            Random random = new Random();
+            return (int)(random.Next() * 10) % choices;
+        }
     }
 }
+
