@@ -131,7 +131,7 @@ namespace TicTacToe
                 b[3] == ch && b[6] == ch && b[9] == ch));
         }
         /// <summary>
-        /// UC8, UC9 & UC10 - Gets Computer move.
+        /// UC8, 9, 10 & 11 - Gets Computer move.
         /// </summary>
         /// <param name="board"></param>
         /// <param name="computerLetter"></param>
@@ -144,6 +144,10 @@ namespace TicTacToe
             if (userWinningMove != 0) return userWinningMove;
             int[] cornerMoves = { 1, 3, 7, 9 };
             int computerMove = GetRandomMoveFromList(board, cornerMoves);
+            if (computerMove != 0) return computerMove;
+            if (IsSpaceFree(board, 5)) return 5;
+            int[] sideMoves = { 2, 4, 6, 8 };
+            computerMove = GetRandomMoveFromList(board, sideMoves);
             if (computerMove != 0) return computerMove;
             return 0;
         }
