@@ -7,6 +7,7 @@ namespace TicTacToe
         public const int HEAD = 0;
         public const int TAILS = 1;
         public enum Player { USER, COMPUTER };
+        public enum GameStatus { WON, FULL_BOARD, CONTINUE};
         /// <summary>
         /// Defines the entry point of the application.
         /// </summary>
@@ -14,13 +15,33 @@ namespace TicTacToe
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to TicTacToe Game.");
-            char[] board = CreateBoard();            
-            int userMove = GetUserMove(board);
-            Player player = GetWhoStartFirst();
+            char[] board = CreateBoard();
             char userLetter = ChooseLetter();
-            Console.WriteLine("Check if won " + IsWinner(board, userLetter));
             char computerLetter = (userLetter == 'X') ? 'O' : 'X';
-            int computerMove = GetComputerMove(board, computerLetter, userLetter);
+            Player player = GetWhoStartFirst();
+            bool gameIsPlaying = true;
+            GameStatus gameStatus;
+            while (gameIsPlaying)
+            {
+                //Player's Turn
+                if (player.Equals(Player.USER))
+                {
+                    DisplayBoard(board);
+                    int userMove = GetUserMove(board);
+                    string wonMessage = "Hooray! You have won the game";
+                    gameStatus = GetGameStatus(board, userMove, userLetter, wonMessage);
+                    player = Player.COMPUTER;
+                }
+                else
+                {
+                    string wonMessage = "The computer has beaten you! You loose.";
+                    int computerMove = GetComputerMove(board, computerLetter, userLetter);
+                    gameStatus = GetGameStatus(board, computerMove, computerLetter, wonMessage);
+                    player = Player.USER;
+                }
+                if (gameStatus.Equals(GameStatus.CONTINUE)) continue;
+                gameIsPlaying = false;
+            }
         }
         /// <summary>
         /// UC1-Creates the board.
@@ -189,6 +210,39 @@ namespace TicTacToe
                 if (IsSpaceFree(board, moves[index])) return moves[index];
             }
             return 0;
+        }
+
+        private static GameStatus GetGameStatus(char[] board, int move, char letter, string wonMessage)
+        {
+            MakeMove(board, move, letter);
+            if (IsWinner(board, letter))
+            {
+                DisplayBoard(board);
+                Console.WriteLine(wonMessage);
+                return GameStatus.WON;
+            }
+            if (IsBoardFull(board))
+            {
+                DisplayBoard(board);
+                Console.WriteLine("Game is Tie");
+                return GameStatus.FULL_BOARD;
+            }
+            return GameStatus.CONTINUE;
+        }
+        /// <summary>
+        /// Determines whether board is full.
+        /// </summary>
+        /// <param name="board">The board.</param>
+        /// <returns>
+        ///   <c>true</c> if [is board full] [the specified board]; otherwise, <c>false</c>.
+        /// </returns>
+        private static bool IsBoardFull(char[] board)
+        {
+            for (int index = 1; index < board.Length; index++)
+            {
+                if (IsSpaceFree(board, index)) return false;
+            }
+            return true;
         }
     }
 }
