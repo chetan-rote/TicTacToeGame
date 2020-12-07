@@ -42,6 +42,7 @@ namespace TicTacToe
                 if (gameStatus.Equals(GameStatus.CONTINUE)) continue;
                 gameIsPlaying = false;
             }
+            PlayAgain();
         }
         /// <summary>
         /// UC1-Creates the board.
@@ -211,7 +212,14 @@ namespace TicTacToe
             }
             return 0;
         }
-
+        /// <summary>
+        /// UC12:- Gets the game status.
+        /// </summary>
+        /// <param name="board">The board.</param>
+        /// <param name="move">The move.</param>
+        /// <param name="letter">The letter.</param>
+        /// <param name="wonMessage">The won message.</param>
+        /// <returns></returns>
         private static GameStatus GetGameStatus(char[] board, int move, char letter, string wonMessage)
         {
             MakeMove(board, move, letter);
@@ -243,6 +251,17 @@ namespace TicTacToe
                 if (IsSpaceFree(board, index)) return false;
             }
             return true;
+        }
+        /// <summary>
+        /// UC13:- Plays the again.
+        /// </summary>
+        /// <returns></returns>
+        private static bool PlayAgain()
+        {
+            Console.WriteLine("Do you want to play again? (Yes or No)");
+            string option = Console.ReadLine().ToLower();
+            if (option.Equals("yes")) return true;
+            return false;
         }
     }
 }
