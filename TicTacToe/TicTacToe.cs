@@ -131,7 +131,7 @@ namespace TicTacToe
                 b[3] == ch && b[6] == ch && b[9] == ch));
         }
         /// <summary>
-        /// UC8 & UC9 - Gets Computer move.
+        /// UC8, UC9 & UC10 - Gets Computer move.
         /// </summary>
         /// <param name="board"></param>
         /// <param name="computerLetter"></param>
@@ -142,6 +142,9 @@ namespace TicTacToe
             if (winningMove != 0) return winningMove;
             int userWinningMove = GetWinningMove(board, userLetter);
             if (userWinningMove != 0) return userWinningMove;
+            int[] cornerMoves = { 1, 3, 7, 9 };
+            int computerMove = GetRandomMoveFromList(board, cornerMoves);
+            if (computerMove != 0) return computerMove;
             return 0;
         }
         /// <summary>
@@ -169,6 +172,19 @@ namespace TicTacToe
             char[] boardCopy = new char[10];
             Array.Copy(board, 0, boardCopy, 0, board.Length);
             return boardCopy;
+        }
+        /// <summary>
+        /// UC10 Gets the random move from list.
+        /// </summary>
+        /// <param name="board">The board.</param>
+        /// <param name="moves">The moves.</param>
+        /// <returns></returns>
+        private static int GetRandomMoveFromList(char[] board, int[] moves)
+        {
+            for (int index = 0; index < moves.Length; index++) {
+                if (IsSpaceFree(board, moves[index])) return moves[index];
+            }
+            return 0;
         }
     }
 }
