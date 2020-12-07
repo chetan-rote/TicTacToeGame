@@ -19,6 +19,8 @@ namespace TicTacToe
             Player player = GetWhoStartFirst();
             char userLetter = ChooseLetter();
             Console.WriteLine("Check if won " + IsWinner(board, userLetter));
+            char computerLetter = (userLetter == 'X') ? 'O' : 'X';
+            int computerMove = GetComputerMove(board, computerLetter);
         }
         /// <summary>
         /// UC1-Creates the board.
@@ -127,6 +129,44 @@ namespace TicTacToe
                 b[1] == ch && b[4] == ch && b[7] == ch ||
                 b[2] == ch && b[5] == ch && b[8] == ch ||
                 b[3] == ch && b[6] == ch && b[9] == ch));
+        }
+        /// <summary>
+        /// UC8 - Gets Computer move.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="computerLetter"></param>
+        /// <returns></returns>
+        private static int GetComputerMove(char[] board, char computerLetter)
+        {
+            int winningMove = GetWinningMove(board, computerLetter);
+            if (winningMove != 0) return winningMove;
+            return 0;
+        }
+        /// <summary>
+        /// Gets Winning Move.
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="letter"></param>
+        /// <returns></returns>
+        private static int GetWinningMove(char [] board, char letter)
+        {
+            for (int index = 0; index < board.Length; index++)
+            {
+                char[] copyofBoard = GetCopyOfBoard(board);
+                if (IsSpaceFree(copyofBoard, index))
+                {
+                    MakeMove(copyofBoard, index, letter);
+                    if (IsWinner(copyofBoard, letter))
+                        return index;
+                }
+            }
+            return 0;
+        }
+        private static char [] GetCopyOfBoard(char [] board)
+        {
+            char[] boardCopy = new char[10];
+            Array.Copy(board, 0, boardCopy, 0, board.Length);
+            return boardCopy;
         }
     }
 }
