@@ -17,6 +17,8 @@ namespace TicTacToe
             char[] board = CreateBoard();            
             int userMove = GetUserMove(board);
             Player player = GetWhoStartFirst();
+            char userLetter = ChooseLetter();
+            Console.WriteLine("Check if won " + IsWinner(board, userLetter));
         }
         /// <summary>
         /// UC1-Creates the board.
@@ -91,7 +93,7 @@ namespace TicTacToe
             if (spaceFree) board[index] = letter;
         }
         /// <summary>
-        /// Gets the who start first.
+        /// UC6 Gets the who start first.
         /// </summary>
         /// <returns></returns>
         private static Player GetWhoStartFirst()
@@ -108,6 +110,23 @@ namespace TicTacToe
         {
             Random random = new Random();
             return (int)(random.Next() * 10) % choices;
+        }
+        /// <summary>
+        /// UC7 Checks which on board user wins.
+        /// </summary>
+        /// <param name="b"></param>
+        /// <param name="ch"></param>
+        /// <returns></returns>
+        private static bool IsWinner(char[] b, char ch)
+        { 
+            return ((b[1] == ch && b[2] == ch && b[3] == ch) ||
+                (b[4] == ch && b[5] == ch && b[6] == ch) ||
+                (b[7] == ch && b[8] == ch && b[9] == ch ||
+                b[1] == ch && b[5] == ch && b[9] == ch ||
+                b[3] == ch && b[5] == ch && b[7] == ch ||
+                b[1] == ch && b[4] == ch && b[7] == ch ||
+                b[2] == ch && b[5] == ch && b[8] == ch ||
+                b[3] == ch && b[6] == ch && b[9] == ch));
         }
     }
 }
