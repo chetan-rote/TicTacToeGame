@@ -20,7 +20,7 @@ namespace TicTacToe
             char userLetter = ChooseLetter();
             Console.WriteLine("Check if won " + IsWinner(board, userLetter));
             char computerLetter = (userLetter == 'X') ? 'O' : 'X';
-            int computerMove = GetComputerMove(board, computerLetter);
+            int computerMove = GetComputerMove(board, computerLetter, userLetter);
         }
         /// <summary>
         /// UC1-Creates the board.
@@ -131,15 +131,17 @@ namespace TicTacToe
                 b[3] == ch && b[6] == ch && b[9] == ch));
         }
         /// <summary>
-        /// UC8 - Gets Computer move.
+        /// UC8 & UC9 - Gets Computer move.
         /// </summary>
         /// <param name="board"></param>
         /// <param name="computerLetter"></param>
         /// <returns></returns>
-        private static int GetComputerMove(char[] board, char computerLetter)
+        private static int GetComputerMove(char[] board, char computerLetter, char userLetter)
         {
             int winningMove = GetWinningMove(board, computerLetter);
             if (winningMove != 0) return winningMove;
+            int userWinningMove = GetWinningMove(board, userLetter);
+            if (userWinningMove != 0) return userWinningMove;
             return 0;
         }
         /// <summary>
